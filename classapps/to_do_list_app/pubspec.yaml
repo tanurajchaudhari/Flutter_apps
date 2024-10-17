@@ -1,0 +1,32 @@
+name: to_do_list_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+  flutter_svg: ^2.0.7
+  google_fonts: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+     - D:\flutter\classapps\to_do_list_app\assets\images\svg\center image.svg
+     - D:\flutter\classapps\to_do_list_app\assets\images\svg\delete.svg
+     - D:\flutter\classapps\to_do_list_app\assets\images\svg\edit.svg
+
+     
+
+
+  
