@@ -64,14 +64,14 @@ class _todo_app_ui extends State{
   void showBottomSheet(bool isEdit,[ToDoModel? todoobj]){
     showModalBottomSheet(
       isScrollControlled: true,
-      context,
-      builder:(context)){
+      context:context,
+      builder:(context){
       return  Padding(padding: EdgeInsets.only(
         bottom:  MediaQuery.of(context).viewInsets.bottom,
         top:12.0,
         right: 12.0,
         left: 12.0,
-
+      
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,8 +211,9 @@ class _todo_app_ui extends State{
         ],
       ),
        );
-
-    };
+  
+      },
+    );
   }
       
    @override    
