@@ -50,6 +50,7 @@ class _QuizAppState extends State {
       "correctAnswer": 1
     },
   ];
+  
   int currentQuestionIndex = 0;
   int selectedAnswerIndex = -1;
   int score = 0;
@@ -175,6 +176,9 @@ class _QuizAppState extends State {
                     )),
               ),
             ),
+           const SizedBox(
+              height: 25,
+            ),
             SizedBox(
               height: 50,
               width: 350,
@@ -196,6 +200,9 @@ class _QuizAppState extends State {
                           color: Colors.black,
                         )),
               ),
+            ),
+            const SizedBox(
+              height: 25,
             ),
             SizedBox(
               height: 50,

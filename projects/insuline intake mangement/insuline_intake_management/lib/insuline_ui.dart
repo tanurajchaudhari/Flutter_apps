@@ -25,6 +25,7 @@ class _insuline_ui extends State {
   TextEditingController beforeDinnerSugar = TextEditingController();
   TextEditingController afterDinnerSugar = TextEditingController();
   double? isr;
+  double? isrval;
   List<cardscalss> cards = [];
   List cardColorList = [
     const Color.fromRGBO(250, 232, 232, 1),
@@ -32,13 +33,14 @@ class _insuline_ui extends State {
     const Color.fromRGBO(250, 249, 232, 1),
     const Color.fromRGBO(250, 232, 250, 1),
   ];
-  
+
   double calculatISRRatio(){
 
    }
-   double calculateisrinsuline(int sugar){
-            int val=sugar-120;
-            return val/isr;
+   void calculateisrinsuline(int sugar){
+           int val=sugar-120;
+           isrval=val/tdd;
+            
    }
   @override
   Widget build(BuildContext context) {
@@ -87,6 +89,7 @@ class _insuline_ui extends State {
                                     int.tryParse(value); // Convert to integer
                                 if (beforeBreakfastSugar != null) {
                                   // call function of  insuline calculation
+                                  calculateisrinsuline(beforeBreakfastSugar);
 
                                   // Valid integer
                                   print("You entered: $beforeBreakfastSugar");
@@ -96,7 +99,7 @@ class _insuline_ui extends State {
                                 }
                               },
                               decoration: InputDecoration(
-                                labelText: "Enter a number",
+                                labelText: "Enter a sugar",
                                 hintText: "e.g., 123",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -105,6 +108,9 @@ class _insuline_ui extends State {
                             ),
                             const SizedBox(
                               height: 10,
+                            ),
+                            Container(
+                              child: Text("required insuline is $v"),
                             ),
 
                             ElevatedButton(
@@ -146,6 +152,7 @@ class _insuline_ui extends State {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // showBottomSheet(false);
+          //calculatetotaldailydose;
         },
         backgroundColor: const Color.fromRGBO(0, 139, 148, 1.0),
         child: const Icon(

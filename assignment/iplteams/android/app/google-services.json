@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970336293274",
+    "project_id": "iplteamsapp-35460",
+    "storage_bucket": "iplteamsapp-35460.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970336293274:android:50c71955002d6e8910ea23",
+        "android_client_info": {
+          "package_name": "com.example.iplteams"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAempLn2Q87-AzBZu4VwHNh10HVTywaTgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,6 @@
-
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:google_fonts/google_fonts.dart";
-
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +39,8 @@ class _To_Do_ListState extends State<To_Do_List> {
         appBar: AppBar(
           title: const Text(
             "To-do list",
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white),
+            style: TextStyle(
+                fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white),
           ),
           backgroundColor: const Color.fromRGBO(2, 167, 177, 1),
         ),
@@ -57,18 +56,23 @@ class _To_Do_ListState extends State<To_Do_List> {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Container(
-                  decoration: BoxDecoration(color: colorList[index % colorList.length], borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(
+                      color: colorList[index % colorList.length],
+                      borderRadius: BorderRadius.circular(20)),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 10),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 10),
                               height: 55,
                               width: 55,
-                              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
                               child: SvgPicture.asset(
                                 "assets/images/svg/center image.svg",
                                 height: 24,
@@ -82,25 +86,30 @@ class _To_Do_ListState extends State<To_Do_List> {
                                 Text(
                                   "Lorem Ipsum is simply setting industry. ",
                                   style: GoogleFonts.quicksand(
-                                      textStyle: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w800,
-                                  )),
+                                    textStyle: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 SizedBox(
-                                    width: 260,
-                                    // height: 44,
-                                    child: Text(
-                                      "Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                                      style: GoogleFonts.quicksand(
-                                        textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Color.fromRGBO(84, 84, 84, 1)),
-                                      ),
-                                    ))
+                                  width: 260,
+                                  // height: 44,
+                                  child: Text(
+                                    "Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                                    style: GoogleFonts.quicksand(
+                                      textStyle: const TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color.fromRGBO(84, 84, 84, 1)),
+                                    ),
+                                  ),
+                                ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                         const SizedBox(
