@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 //import 'package:mynotes/firebase_options.dart';
+import "dart:developer" as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -60,29 +61,29 @@ class _LoginViewState extends State<LoginView> {
                 final email = _email.text;
                 final password = _password.text;
                 try {
-                  final userCredential =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: email,
                     password: password,
                   );
-                  print(userCredential);
+
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("/notes", (route) => false);
                 } on FirebaseAuthException catch (e) {
-                  //print(e.code);
-      
                   if (e.code == 'invalid-credential') {
-                    print("User Not Found");
+                    devtools.log("User Not Found");
                   } else if (e.code == 'wrong-password') {
-                    print("Wrong password  ...");
+                    devtools.log("Wrong password  ...");
                     //print(e.code);
                   } else if (e.code == 'invalid-email') {
-                    print("Invalid email entered");
+                    devtools.log("Invalid email entered");
                   }
                 }
               },
               child: const Text("login....")),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil("/register", (route)=> false);
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil("/register", (route) => false);
             },
             child: const Text(
               "Not register yet ?? Register here!",
