@@ -22,10 +22,12 @@ void main() async {
     routes: {
       loginroute: (context) => const LoginView(),
       registerroute: (context) => const RegisterView(),
-      notesroute:(context)=>const NotesView(),
+      notesroute: (context) => const NotesView(),
+      verifyEmailRoute: (context) => const VerifyEmailView(),
     },
   ));
 }
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -44,8 +46,8 @@ class HomePage extends StatelessWidget {
               if (user.emailVerified) {
                 return const NotesView();
               } else {
-               // return const VerifyEmailView();
-                return const LoginView();
+                 return const VerifyEmailView();
+               // return const LoginView();
               }
             } else {
               return const LoginView();

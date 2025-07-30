@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
 
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/show_error_dialogs.dart';
+import 'package:mynotes/views/verify_email_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -36,9 +38,8 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: const Text("Register "),
+        title: const Text("Register "),
       ),
-
       body: Column(
         children: [
           TextField(
@@ -64,28 +65,52 @@ class _RegisterViewState extends State<RegisterView> {
                 final email = _email.text;
                 final password = _password.text;
                 try {
-                  final userCredential =
-                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: email,
                     password: password,
                   );
-                  devtools.log(userCredential.toString());
+                  final user=FirebaseAuth.instance.currentUser;
+                  user?.sendEmailVerification();
+                  Navigator.of(context).pushNamed(
+                    verifyEmailRoute,
+                  );
                 } on FirebaseAuthException catch (e) {
-                  print(e.code);
                   if (e.code == "weak-password") {
-                    devtools.log("weak password  ");
+                    showErrorDialog(
+                      context,
+                      "WEak Password ",
+                    );
                   } else if (e.code == "email-already-in-use") {
-                    devtools.log("Email already  someone  use ");
+                    showErrorDialog(
+                      context,
+                      "Email already in use ",
+                    );
                   } else if (e.code == "invalid-email") {
-                    devtools.log("Invalid email  please valid syntax of email ..");
+                    showErrorDialog(
+                      context,
+                      "Invalid Email",
+                    );
+                  } else {
+                    showErrorDialog(
+                      context,
+                      "Error :- ${e.code}",
+                    );
                   }
+                } catch (e) {
+                  showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: const Text("Register  ")),
-              TextButton(onPressed: (){
-                Navigator.of(context).pushNamedAndRemoveUntil(loginroute,(route)=>false);
-              },
-               child: const Text("Already register ? Login here!"),)
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(loginroute, (route) => false);
+            },
+            child: const Text("Already register ? Login here!"),
+          )
         ],
       ),
     );
