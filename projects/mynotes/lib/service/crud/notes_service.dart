@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:mynotes/service/crud/crud_exceptions.dart';
 import 'package:sqflite/sqflite.dart';
@@ -31,7 +30,7 @@ class NotesService {
 
   }
   Future<void> _cacheNotes()async{
-    final allNotes=await getAllNotes();
+    final allNotes = await getAllNotes();
     _notes = allNotes.toList();
     _notesStreamController.add(_notes);
   }
