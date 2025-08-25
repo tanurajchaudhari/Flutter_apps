@@ -13,7 +13,8 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State {
   late final NotesService _notesService;
   String get userEmail => AuthService.firebase().currentUser!.email!;
-
+  
+  
   @override
   void initState() {
     _notesService = NotesService();
@@ -33,6 +34,7 @@ class _NotesViewState extends State {
         appBar: AppBar(
           title: const Text("Your Notes"),
           actions: [
+
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(newnoteroute);

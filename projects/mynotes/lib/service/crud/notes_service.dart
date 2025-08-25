@@ -5,6 +5,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' show join;
 
+
+
 class NotesService {
   Database? _db;
   List<DatabaseNote> _notes =[];
@@ -128,7 +130,7 @@ class NotesService {
       noteTable,
       {
         userIdColumn: owner.id,
-        text: text,
+        textColumn: text,
         isSyncedWithCloudColumn: 1,
       },
     );
@@ -140,6 +142,7 @@ class NotesService {
     );
     _notes.add(note);
     _notesStreamController.add(_notes);
+    print("in createNote=$note");
     return note;
   }
 
@@ -147,13 +150,17 @@ class NotesService {
   Future<DatabaseUser> getUser({required String email}) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
+    print("db+++===$db");
+    print("email in get user before result :- $email");
     final result = await db.query(
       userTable,
       limit: 1,
       where: 'email=?',
       whereArgs: [email.toLowerCase()],
     );
+    print("result from query := $result");
     if (result.isEmpty) {
+      print("Could not find user   exception ");
       throw CouldNotFindUser();
     } else {
       return DatabaseUser.fromRow(result.first);
@@ -170,7 +177,7 @@ class NotesService {
       where: 'email=?',
       whereArgs: [email.toLowerCase()],
     );
-    if (result.isEmpty) {
+    if (result.isNotEmpty) {
       throw UserAlreadyExists();
     }
     final userId = await db.insert(
@@ -262,7 +269,7 @@ class DatabaseUser {
         email = map[emailColumn] as String;
 
   @override
-  String toString() => 'Person,ID = $id, wmail = $email';
+  String toString() => 'Person,ID = $id, Email = $email';
 
   @override
   bool operator ==(covariant DatabaseUser other) => id == other.id;
