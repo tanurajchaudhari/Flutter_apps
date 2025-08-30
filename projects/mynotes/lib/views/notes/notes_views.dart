@@ -13,8 +13,7 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State {
   late final NotesService _notesService;
   String get userEmail => AuthService.firebase().currentUser!.email!;
-  
-  
+
   @override
   void initState() {
     _notesService = NotesService();
@@ -22,11 +21,11 @@ class _NotesViewState extends State {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _notesService.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _notesService.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,6 @@ class _NotesViewState extends State {
         appBar: AppBar(
           title: const Text("Your Notes"),
           actions: [
-
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(newnoteroute);
@@ -74,7 +72,28 @@ class _NotesViewState extends State {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Text("Waiting fo all notes ");
+                        case ConnectionState.active:
+                          if (snapshot.hasData) {
+                            final allNotes =
+                                snapshot.data as List<DatabaseNote>;
+                            return ListView.builder(
+                              itemCount: allNotes.length,
+                              itemBuilder: (context, index) {
+                                final note = allNotes[index];
+                                return ListTile(
+                                  title: Text(
+                                    note.text,
+                                    maxLines: 1,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        // return const Text("Waiting fo all notes ");
                         default:
                           return CircularProgressIndicator();
                         //return const Text("default of waiting");
