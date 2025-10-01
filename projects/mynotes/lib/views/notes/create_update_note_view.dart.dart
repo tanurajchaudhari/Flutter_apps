@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mynotes/service/auth/auth_service.dart';
 import 'package:mynotes/service/crud/notes_service.dart';
+import 'package:mynotes/utilities/generics/get_arguments.dart';
+import 'package:path/path.dart';
 
-class NewNoteView extends StatefulWidget {
-  const NewNoteView({super.key});
+class CreateUpdateNoteView extends StatefulWidget {
+  const CreateUpdateNoteView({super.key});
 
   @override
-  State<NewNoteView> createState() => _NewNoteViewState();
+  State<CreateUpdateNoteView> createState() => _CreateUpdateNoteViewState();
 }
 
-class _NewNoteViewState extends State<NewNoteView> {
+class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   DatabaseNote? _note;
   late final NotesService _notesService;
   late final TextEditingController _textController;
@@ -40,17 +42,23 @@ class _NewNoteViewState extends State<NewNoteView> {
     _textController.addListener(_textControllerListner);
   }
 
-  Future<DatabaseNote> createNewNote() async {
+  Future<DatabaseNote> createOrGetExistingNote(BuildContext context) async {
+    final widgetNote = context.getArgument<DatabaseNote>();
+    if (widgetNote != null) {
+      _note = widgetNote;
+      _textController.text = widgetNote.text;
+      return widgetNote;
+    }
     final existingNote = _note;
     if (existingNote != null) {
       return existingNote;
     }
     final currentUser = AuthService.firebase().currentUser!;
     final email = currentUser.email!;
-    print("email in createnote: $email");
-    final owner = await  _notesService.getUser(email: email);//error
-    print("getuser from getUser method in creatNote: $owner");
-    return await  _notesService.createNote(owner: owner);
+    final owner = await _notesService.getUser(email: email);
+    final newNote = await _notesService.createNote(owner: owner);
+    _note = newNote;
+    return newNote;
   }
 
   void _deleteNoteIfTextIsEmpty() {
@@ -86,29 +94,28 @@ class _NewNoteViewState extends State<NewNoteView> {
         title: const Text("New Note"),
       ),
       body: FutureBuilder(
-        future: createNewNote(),
-        builder:
-            ( context,  snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.done:  
-                 final note=snapshot.data;
-                 if(note==null){
-                  return const Text("Error : could not creat note");
-                 }
-                  _note= note as DatabaseNote;
-                  _setupTextControllerListner();
-                  return TextField(
-                    controller: _textController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      hintText: "Start typing your notes... ",
-                    ),
-                  );
-                default:
-                  return const CircularProgressIndicator();
+        future: createOrGetExistingNote(context),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              final note = snapshot.data;
+              if (note == null) {
+                return const Text("Error : could not creat note");
               }
-            },
+              // _note= note as DatabaseNote;
+              _setupTextControllerListner();
+              return TextField(
+                controller: _textController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  hintText: "Start typing your notes... ",
+                ),
+              );
+            default:
+              return const CircularProgressIndicator();
+          }
+        },
       ),
     );
   }

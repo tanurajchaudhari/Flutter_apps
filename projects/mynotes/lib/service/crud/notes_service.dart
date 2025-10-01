@@ -156,8 +156,8 @@ class NotesService {
   Future<DatabaseUser> getUser({required String email}) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
-    print("db+++===$db");
-    print("email in get user before result :- $email");
+    
+    
     final result = await db.query(
       userTable,
       limit: 1,
